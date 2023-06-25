@@ -1,0 +1,23 @@
+{
+  "id": "4129473",
+  "name": "sph",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "34452971",
+      "name": "down-btn-fill",
+      "font_class": "down-btn-fill",
+      "unicode": "e839",
+      "unicode_decimal": 59449
+    },
+    {
+      "icon_id": "34453070",
+      "name": "up-btn-fill",
+      "font_class": "up-btn-fill",
+      "unicode": "e844",
+      "unicode_decimal": 59460
+    }
+  ]
+}
