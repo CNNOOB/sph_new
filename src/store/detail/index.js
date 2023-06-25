@@ -1,4 +1,4 @@
-import { reqGoodsInfo } from "@/api"
+import { reqGoodsInfo,reqAddOrUpdateShopCart } from "@/api"
 
 
 let state = {
@@ -11,7 +11,11 @@ let actions = {
         if (result.code == 200) {
             commit("GETGOODSINFO", result.data)
         } 
-    }
+    },
+    async reqAddOrUpdateShopCart({commit},{skuId,skuNum}){
+        let result = await reqAddOrUpdateShopCart(skuId,skuNum)
+        console.log(result)
+    },
 }
 let mutations = {
     GETGOODSINFO(state, goodsInfo) {

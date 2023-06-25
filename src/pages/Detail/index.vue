@@ -1,5 +1,5 @@
 <template>
-  <div class="detail">
+  <div class="detail"> 
     <!-- 商品分类导航 -->
     <TypeNav />
 
@@ -82,14 +82,15 @@
                 :key="spuSaleAttr.id"
               >
                 <dt class="title">{{ spuSaleAttr.saleAttrName }}</dt>
-                  <!-- @click="changeActive(spuSaleAttr,spuSaleAttrValue)" -->
+                <!-- @click="changeActive(spuSaleAttr,spuSaleAttrValue)" -->
                 <dd
                   changepirce="0"
-                  :class="{active:spuSaleAttrValue.isChecked==1}"
-                  v-for="spuSaleAttrValue,index2 in spuSaleAttr.spuSaleAttrValueList"
+                  :class="{ active: spuSaleAttrValue.isChecked == 1 }"
+                  v-for="(
+                    spuSaleAttrValue, index2
+                  ) in spuSaleAttr.spuSaleAttrValueList"
                   :key="spuSaleAttrValue.id"
-                
-                  @click="changeActive1(index1,index2)"
+                  @click="changeActive1(index1, index2)"
                 >
                   {{ spuSaleAttrValue.saleAttrValueName }}
                 </dd>
@@ -97,12 +98,12 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model="skuNum" @change="changeSkuNum" />
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum>1?skuNum--:1 ">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="addToShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -347,7 +348,11 @@ import Zoom from "./Zoom/Zoom";
 
 export default {
   name: "Detail",
-
+  data(){
+    return{
+      skuNum:1
+    }
+  },
   components: {
     ImageList,
     Zoom,
@@ -363,21 +368,31 @@ export default {
     this.$store.dispatch("getGoodsInfo", this.$route.params.id);
   },
   methods: {
-    changeActive(spuSaleAttr,spuSaleAttrValue){
-      spuSaleAttr.spuSaleAttrValueList.forEach(item => {
-        item.isChecked = '0'
+    changeActive(spuSaleAttr, spuSaleAttrValue) {
+      spuSaleAttr.spuSaleAttrValueList.forEach((item) => {
+        item.isChecked = "0";
       });
-      spuSaleAttrValue.isChecked = '1'
+      spuSaleAttrValue.isChecked = "1";
     },
-     changeActive1(index1,index2){
-    this.spuSaleAttrList[index1].spuSaleAttrValueList.forEach(item=>{
-      item.isChecked = '0'
-    })
-    this.spuSaleAttrList[index1].spuSaleAttrValueList[index2].isChecked = '1'
-  }
+    changeActive1(index1, index2) {
+      this.spuSaleAttrList[index1].spuSaleAttrValueList.forEach((item) => {
+        item.isChecked = "0";
+      });
+      this.spuSaleAttrList[index1].spuSaleAttrValueList[index2].isChecked = "1";
+    },
+    changeSkuNum(event){
+      let value  = event.target.value * 1
+      if(isNaN(value)||value<1){
+        console.log('feifa')
+        this.skuNum = 1
+      }else{
+        this.skuNum = parseInt(value)
+      }
+    },
+    addToShopCart(){
+      this.$store.dispatch('reqAddOrUpdateShopCart',{skuId:this.$route.params.id,skuNum:this.skuNum})
+    }
   },
- 
-
 };
 </script>
 
