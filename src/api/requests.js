@@ -1,5 +1,6 @@
 //对于axios进行二次封装
 import axios from "axios";
+import store from "@/store";
 
 //引入进度条
 import nprogress from 'nprogress';
@@ -20,10 +21,9 @@ requests.interceptors.request.use(config => {
     //请求拦截器：其实项目中还有一个重要的作用,给服务器携带请求们的公共的参数
     //进度条开始
     nprogress.start();
-
-  
-
-  
+    if(store.state.cartList.USER_ID){
+        config.headers.userTempId = store.state.cartList.USER_ID
+    }
     return config;
 });
 

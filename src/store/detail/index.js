@@ -13,8 +13,15 @@ let actions = {
         } 
     },
     async reqAddOrUpdateShopCart({commit},{skuId,skuNum}){
-        let result = await reqAddOrUpdateShopCart(skuId,skuNum)
-        console.log(result)
+    
+            let result = await reqAddOrUpdateShopCart(skuId,skuNum)
+        
+            if(result.code==200){
+                return 'ok'
+            }else{
+                Promise.reject()
+            }
+
     },
 }
 let mutations = {

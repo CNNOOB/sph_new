@@ -389,8 +389,19 @@ export default {
         this.skuNum = parseInt(value)
       }
     },
-    addToShopCart(){
-      this.$store.dispatch('reqAddOrUpdateShopCart',{skuId:this.$route.params.id,skuNum:this.skuNum})
+   async addToShopCart(){
+      try {
+        //  await this.$store.dispatch('reqAddOrUpdateShopCart',{skuId:this.$route.params.id})
+        await this.$store.dispatch('reqAddOrUpdateShopCart',{skuId:this.$route.params.id,skuNum:this.skuNum})
+        sessionStorage.setItem('SKUINFO',JSON.stringify(this.skuInfo))
+        this.$router.push({
+          name:'addcartsuccess',
+          query:{skuNum:this.skuNum}
+        })
+      } catch (error) {
+        // alert(error.message)
+        alert('加入购物车失败')
+      }
     }
   },
 };
