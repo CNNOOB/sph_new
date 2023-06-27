@@ -20,7 +20,7 @@ let actions = {
         if(result.code==200){
             return 'ok'
         }else{
-            Promise.reject()
+            return Promise.reject(new Error('faile'))
         }
     },
     async updatedChecked({commit},{skuId,isChecked}) {
@@ -28,7 +28,7 @@ let actions = {
         if(result.code==200){
             return 'ok'
         }else{
-            Promise.reject()
+            return Promise.reject(new Error('faile'))
         }
     },
     //遍历数组，isChecked为1的全部删除
