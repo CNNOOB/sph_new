@@ -13,7 +13,8 @@
       <div class="cart-body">
         <ul class="cart-list" v-for="sku in cartInfoList" :key="sku.id">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" :checked="sku.isChecked ">
+            
+            <input type="checkbox" name="chk_list" :checked="sku.isChecked " @change="updatedChecked(sku,$event)">
           </li>
           <li class="cart-list-con2">
             <img :src="sku.imgUrl">
@@ -32,7 +33,7 @@
             <span class="sum">{{sku.skuNum * sku.skuPrice}}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a  class="sindelet" @click="deleteCartList(sku.skuId)">删除</a>
             <br>
             <a href="#none">移到收藏</a>
           </li>
@@ -43,11 +44,12 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAllChecked">
+        <!--isAllChecked变化导致勾选状态变化时，不会触发change回调  -->
+        <input class="chooseAll" type="checkbox" :checked="isAllChecked" @change="updatedCheckedAll" >
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a @click="deleteAllCartList">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -118,8 +120,44 @@ import debounce from "lodash/debounce";
       } catch (error) {
          alert("修改数量失败");
       }
-    },500)
+    },500),
+    async deleteCartList(skuId){
+      try {
+         await this.$store.dispatch('deleteCartList',skuId)
+         this.getData()
+      } catch (error) {
+        alert('删除购物车失败')
+      }
     },
+    async deleteAllCartList(){
+      try {
+        await this.$store.dispatch('deleteAllCartList')
+        this.getData()
+      } catch (error) {
+         alert('删除购物车失败:'+error.message)
+      }
+    },
+    async updatedChecked(sku,event){
+      let isChecked = event.target.checked?'1':'0'
+      try {
+        await this.$store.dispatch('updatedChecked',{skuId:sku.skuId,isChecked})
+         this.getData()
+      } catch (error) {
+        alert(error.message)
+      }
+    },
+    async updatedCheckedAll(event){
+      console.log('change函数被调用')
+      let isChecked = event.target.checked?'1':'0'
+      try {
+        await  this.$store.dispatch('updatedCheckedAll',isChecked)
+        this.getData()
+      } catch (error) {
+        alert(error.message)
+      }
+    }
+    },
+    
     computed:{
 
     ...mapGetters(['shopCartInfo']),//至少是一个空对象

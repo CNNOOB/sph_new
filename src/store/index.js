@@ -4,6 +4,7 @@ import home from '@/store/home'
 import search from '@/store/search'
 import detail from '@/store/detail'
 import cartList from '@/store/cartList'
+import user  from '@/store/user'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ export default new Vuex.Store({
         home,
         search,
         detail,
-        cartList
+        cartList,
+        user
 
     }
 })

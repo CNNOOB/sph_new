@@ -24,3 +24,15 @@ export const reqAddOrUpdateShopCart = (skuId, skuNum) => {
 export const reqCartList = () => {
      return requests({ method: 'get', url: '/cart/cartList' })
 }
+export const deleteCartListById = (skuId)=>{
+     return requests({method:'delete',url:`/cart/deleteCart/${skuId}`})
+}
+export const updatedCheckedById = (skuId,isChecked)=>{
+     return requests({method:'get',url:`/cart/checkCart/${skuId}/${isChecked}`})
+}
+export const sendCode = (phone)=>{
+     return requests({method:'get',url:`/user/passport/sendCode/${phone}`})
+}
+export const userRegister = (data)=>{
+     return  requests({ method: 'post', url: `/user/passport/register`,data:data })
+}

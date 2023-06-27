@@ -1,4 +1,4 @@
-import { reqCartList } from "@/api"
+import { reqCartList,deleteCartListById,updatedCheckedById} from "@/api"
 import {getUserUUID} from '@/utils/USER_ID'
 
 
@@ -15,6 +15,42 @@ let actions = {
             commit("GETCARTLIST", result.data)
         } 
     },
+    async deleteCartList({commit},skuId){
+        let result = await deleteCartListById(skuId)
+        if(result.code==200){
+            return 'ok'
+        }else{
+            Promise.reject()
+        }
+    },
+    async updatedChecked({commit},{skuId,isChecked}) {
+        let result = await updatedCheckedById(skuId,isChecked)
+        if(result.code==200){
+            return 'ok'
+        }else{
+            Promise.reject()
+        }
+    },
+    //遍历数组，isChecked为1的全部删除
+    deleteAllCartList({state,dispatch}){
+        let promiseAll = []
+        state.cartInfo[0].cartInfoList.forEach(item => {
+            if(item.isChecked==1){
+                let promise = dispatch('deleteCartList',item.skuId)
+                promiseAll.push(promise)
+            }
+        });
+        return Promise.all(promiseAll)
+    },
+    updatedCheckedAll({state,dispatch},isChecked){
+        let promiseAll =[]
+        state.cartInfo[0].cartInfoList.forEach(item=>{
+            let promise = dispatch('updatedChecked',{skuId:item.skuId,isChecked})
+            promiseAll.push(promise)
+        })
+        return Promise.all(promiseAll)
+    }
+
    
 }
 let mutations = {
