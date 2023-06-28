@@ -1,8 +1,9 @@
-import { reqUserAddress } from "@/api"
+import { reqUserAddress,reqTradeOrder } from "@/api"
 
 
 let state = {
-    
+    addressList:[],
+    orderInfo:{}
 
 }
 let actions = {
@@ -10,13 +11,26 @@ let actions = {
        let result =  await reqUserAddress()
        if(result.code == 200){
         console.log(result)
-       }else{
-        console.log(result)
+        commit('GETADDRESS',result.data)
+        
        }
-    }
+    },
+    async getorderInfo({ commit }) {
+        let result =  await reqTradeOrder()
+        if(result.code == 200){
+         commit('GETORDERINFO',result.data)
+         
+        }
+     }
+
 }
-let mutatios = {
-   
+let mutations = {
+    GETADDRESS(state,addressList){
+        state.addressList = addressList
+    },
+    GETORDERINFO(state,orderInfo){
+        state.orderInfo = orderInfo
+    }
 }
 let getters = {
    
@@ -25,6 +39,6 @@ let getters = {
 export default {
     state,
     actions,
-    mutatios,
+    mutations,
     getters
 }

@@ -48,3 +48,6 @@ export const userLogout = ()=>{
 export const reqUserAddress = ()=>{
      return requests({method:'get',url:`/user/userAddress/auth/findUserAddressList`})
 }
+export const reqTradeOrder = ()=>{
+     return requests({method:'get',url:'/order/auth/trade'})
+}
