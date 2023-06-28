@@ -25,6 +25,7 @@ export default {
   components:{ListContainer,Recommend,Rank,Like,Floor,Brand},
   mounted() {
      this.$store.dispatch("getFloor");
+     
    
   },
   computed:{

@@ -36,3 +36,15 @@ export const sendCode = (phone)=>{
 export const userRegister = (data)=>{
      return  requests({ method: 'post', url: `/user/passport/register`,data:data })
 }
+export const userLogin  = (data)=>{
+     return requests({method:'post',url:`/user/passport/login`,data:data})
+}
+export const reqUserInfo = ()=>{
+     return requests({method:'get',url:`/user/passport/auth/getUserInfo`})
+}
+export const userLogout = ()=>{
+     return requests({method:'get',url:`/user/passport/logout`})
+}
+export const reqUserAddress = ()=>{
+     return requests({method:'get',url:`/user/userAddress/auth/findUserAddressList`})
+}

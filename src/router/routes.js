@@ -5,6 +5,7 @@ import Login from '@/pages/Login'
 import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import  ShopCart from '@/pages/ShopCart'
+import  Trade from '@/pages/Trade'
 
 export default
     [
@@ -46,6 +47,14 @@ export default
             name:'shopcart',
             path:'/shopcart',
             component:ShopCart,
+            meta:{
+                show:true
+            }
+        },
+        {
+            name:'trade',
+            path:'/trade',
+            component:Trade,
             meta:{
                 show:true
             }
