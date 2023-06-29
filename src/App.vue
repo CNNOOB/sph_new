@@ -10,6 +10,7 @@
    <!-- <Footer v-show="$route.path.includes('home')||$route.path.includes('search')"></Footer> -->
    <!-- <Footer v-show="$route.path=='/home'||$route.path=='/search'||$route.path=='/'"></Footer> -->
    <Footer v-show="$route.meta.show"></Footer>
+  
   </div>
 </template>
 
@@ -24,6 +25,11 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getCategory");
+  },
+  data() {
+    return {
+     
+    }
   },
 }
 </script>
