@@ -51,3 +51,16 @@ export const reqUserAddress = ()=>{
 export const reqTradeOrder = ()=>{
      return requests({method:'get',url:'/order/auth/trade'})
 }
+//以下api均不走vuex
+//提交订单 /api/order/auth/submitOrder?tradeNo={tradeNo}    post
+export const submitOrder = (tradeNo,data)=>{
+     return requests({method:'post',url:`/order/auth/submitOrder?tradeNo=${tradeNo}`,data})
+}
+//获取订单支付信息 /api/payment/weixin/createNative/{orderId}  get
+export const reqPayInfo = (orderId)=>{
+     return requests({method:'get',url:`/payment/weixin/createNative/${orderId}`})
+}
+//查询订单支付状态 /api/payment/weixin/queryPayStatus/{orderId}  get
+export const reqPayStatus = (orderId) =>{
+     return requests({method:'get',url:`/payment/weixin/queryPayStatus/${orderId}`})
+}
