@@ -64,3 +64,10 @@ export const reqPayInfo = (orderId)=>{
 export const reqPayStatus = (orderId) =>{
      return requests({method:'get',url:`/payment/weixin/queryPayStatus/${orderId}`})
 }
+
+//分页查询我的订单 /api/order/auth/{page}/{limit}
+export const reqOrderList = (page,limit) =>{
+     return requests({method:'get',url:`/order/auth/${page}/${limit}`})
+}
+
+

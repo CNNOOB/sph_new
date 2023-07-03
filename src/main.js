@@ -7,7 +7,21 @@ import Pagination from '@/components/Pagination'
 import '@/mock/mockServe'
 import 'swiper/css/swiper.css'
 import * as API from '@/api'
-import { Button,MessageBox } from 'element-ui';
+import { Button,MessageBox,Message } from 'element-ui';
+import VueLazyload from 'vue-lazyload'
+import loadimage from'@/assets/loading.gif'
+import '@/plugins/validate'
+
+// const loadimage = require('@/assets/loading.gif')
+
+const errorimage = require('@/assets/error.webp')
+
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: errorimage,
+  loading: loadimage,
+  attempt: 1
+})
 
 
 Vue.config.productionTip = false
@@ -25,6 +39,7 @@ new Vue({
     Vue.prototype.$API = API
     Vue.prototype.$msgbox = MessageBox;
     Vue.prototype.$alert = MessageBox.alert;
+    Vue.prototype.$message = Message
     
   },
   mounted(){

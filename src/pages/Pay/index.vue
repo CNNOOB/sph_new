@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import QRCode from 'qrcode'
 export default {
   name: "Pay",
   data() {
@@ -107,12 +108,13 @@ export default {
     async getPayInfo() {
       let result = await this.$API.reqPayInfo(this.$route.query.orderId);
       if (result.code == 200) {
-        console.log(result);
         this.payInfo = result.data;
       }
     },
     async open() {
-      this.$alert("<strong>这是 <i>HTML</i> 片段</strong>", "HTML 片段", {
+      let url = await QRCode.toDataURL(this.payInfo.codeUrl)
+      console.log(url)
+      this.$alert(`<img src=${url}>`,'扫码支付',{
         dangerouslyUseHTMLString: true,
         center: true,
         showClose: false,
@@ -120,14 +122,26 @@ export default {
         cancelButtonText: "支付遇到问题",
         closeOnClickModal: true,
         confirmButtonText: "已支付",
-        beforeClose: (action, instance, done) => {
-          // console.log(action)
+        beforeClose: (action, instance, done) => {   
+          if(action=='cancel'&&this.code!=200){
+            clearInterval(this.timer);
+            this.timer = null;
+            done()
+            this.$message.error('请联系我们xxx@xxx.com')
+          }else if(action=='confirm'){//  if(action=='confirm'&&this.code==200)
+             clearInterval(this.timer);
+            this.timer = null;
+            done()
+             this.$router.push("/paySuccess");
+          }
         },
-      });
+      }).catch(error=>{});
+
+      
 
       this.timer = setInterval(async () => {
         let result = await this.$API.reqPayStatus(this.payInfo.orderId);
-        if (result == 200) {
+        if (result.code == 200) {
           this.code = 200;
           //清除定时器、关闭messageBox、路由跳转
           clearInterval(this.timer);
