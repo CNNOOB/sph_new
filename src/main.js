@@ -28,6 +28,7 @@ Vue.config.productionTip = false
 Vue.component(TypeNav.name,TypeNav)
 Vue.component(Pagination.name,Pagination)
 Vue.component(Button.name,Button)
+console.log('main.js run!!!',new Date())
 
 
 new Vue({
